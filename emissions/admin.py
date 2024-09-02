@@ -8,3 +8,11 @@ class HouseholdAdmin(admin.ModelAdmin):
     search_fields = ("user__first_name", "user__last_name")
     search_help_text = " user first name and user last name."
     autocomplete_fields = ("user",)
+
+
+@admin.register (models.Transportation)
+class TransportationAdmin(admin.ModelAdmin):
+    list_display = ("id","user","vehicle_type","distance","is_public","transportation_date","created_at")
+    search_fields = ("user__first_name", "user__last_name")
+    search_help_text = " user first name and user last name."
+    autocomplete_fields = ("user",)

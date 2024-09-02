@@ -11,4 +11,19 @@ class Household(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete = models.CASCADE)
     created_at = models.DateField(auto_now_add = True)
 
+class Transportation(models.Model):
+    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
+    VEHICLE_TYPE_CHOICES = (
+        ("car","Car"),
+        ("walking","Walking"),
+        ("subway","Subway"),
+        ("cycling","Cycling"),
+        ("bus","Bus"),
+    )
+    vehicle_type = models.CharField(max_length = 50, help_text = "Type Of vehicle", choices = VEHICLE_TYPE_CHOICES )
+    distance = models.PositiveSmallIntegerField()
+    is_public = models.BooleanField(default = False)
+    transportation_date = models.DateField(auto_now_add = True)
+    created_at = models.DateField(auto_now_add = True)
+    user = models.ForeignKey(get_user_model(), on_delete = models.CASCADE)
 
