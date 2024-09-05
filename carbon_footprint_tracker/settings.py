@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY",cast=str)
 DEBUG = config("DEBUG",default=True,cast=bool)
 
 
-LOGIN_REDIRECT_URL = "/admin/"
+LOGIN_REDIRECT_URL = "/"
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS",default=[],cast=str).split(" ")
 
@@ -66,7 +66,9 @@ ROOT_URLCONF = 'carbon_footprint_tracker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            Path.joinpath(BASE_DIR,"templates")
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

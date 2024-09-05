@@ -7,7 +7,7 @@ class HouseholdForm(forms.ModelForm):
         fields = "__all__"
 
 
-class TransportationdForm(forms.ModelForm):
+class TransportationForm(forms.ModelForm):
     class Meta:
         model = models.Transportation
         fields = "__all__"

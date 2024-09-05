@@ -1,48 +1,23 @@
+{% extends 'base.html'%}
 {% load static %}
+    
+{% block content %}
 
+<div class="video-container">
+    <video autoplay muted loop id="bg-video">
+        <source src="{% static 'media/Google Sustainability | A carbon-free future.mp4' %}" type="video/mp4">
+    </video>
+</div>
+<div class="content">
+    <h1>Welcome to The Carbon Footprint Tracker</h1>
+    <p><b>Let's Make a Greener Planet Together, one step at a time</b></p>
+    <button id = "start-button" class="start-button">Let's Start</button>
+    <script>
+        document.getElementById("start-button").onclick = function () {
+    location.href = "index.html";
+};
+    </script>
+</div>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Background with Navbar</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-    <div class="navbar">
-        <div class="navbar-container">
-            <a href="#" class="brand">Carbon Footprint Tracker</a>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Transportation</a></li>
-                    <li><a href="services.html" target="_blank">Household</a>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="LandingPage.html" title="LandingPage">Home</a></li>
-                    <li><a href="#contact">Graphs</a></li>
-                    <li><form action="{% url 'accounts:logout' %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit">Logout</button>
-                    </form></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-
-    <div class="video-container">
-        <video autoplay muted loop id="bg-video">
-            <source src="{% static 'media/Google Sustainability | A carbon-free future.mp4' %}" type="video/mp4">
-        </video>
-    </div>
-    <div class="content">
-        <h1>Welcome to The Carbon Footprint Tracker</h1>
-        <p><b>Let's Make a Greener Planet Together, one step at a time</b></p>
-        <button id = "start-button" class="start-button">Let's Start</button>
-        <script>
-            document.getElementById("start-button").onclick = function () {
-        location.href = "index.html";
-    };
-        </script>
-    </div>
-</body>
-</html>
+    {% endblock%}
+    

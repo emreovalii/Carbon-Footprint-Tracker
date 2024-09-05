@@ -19,6 +19,7 @@ class Transportation(models.Model):
         ("subway","Subway"),
         ("cycling","Cycling"),
         ("bus","Bus"),
+        ("plane","Plane")
     )
     vehicle_type = models.CharField(max_length = 50, help_text = "Type Of vehicle", choices = VEHICLE_TYPE_CHOICES )
     distance = models.PositiveSmallIntegerField()
