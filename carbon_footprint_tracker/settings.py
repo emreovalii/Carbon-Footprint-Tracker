@@ -29,6 +29,7 @@ DEBUG = config("DEBUG",default=True,cast=bool)
 
 
 LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "accounts:login"
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS",default=[],cast=str).split(" ")
 

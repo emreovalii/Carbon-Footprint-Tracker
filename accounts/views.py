@@ -1,8 +1,10 @@
 from django import views
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.views import LoginView, LogoutView
 from accounts import forms
 from django.contrib.auth import login,authenticate
+from django.contrib import messages
+
 
 
 class CustomLoginView(LoginView):
@@ -28,4 +30,4 @@ class RegisterView(views.View):
         return render(request, 'accounts/register.html', {'form': form})
 
 class CustomLogoutView(LogoutView):
-    template_name = "accounts/logout.html"
+    pass

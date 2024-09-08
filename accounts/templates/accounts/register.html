@@ -1,11 +1,41 @@
-<html>
-    <form action="" method="POST">
+{% extends 'accounts/base.html' %}
 
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">
-            Submit
-        </button>
-    </form>
-    <a href="{% url 'accounts:login' %}">Login if you have an account</a>
-</html>
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <!-- username input -->
+    <div data-mdb-input-init class="form-outline mb-4">
+        <label class="form-label" for="form2Example1">Username</label>
+      {{form.username}}
+      
+    </div>
+
+    <div data-mdb-input-init class="form-outline mb-4">
+        <label class="form-label" for="form2Example1">Email</label>
+      {{form.email}}
+      
+    </div>
+  
+    <!-- Password input -->
+    <div data-mdb-input-init class="form-outline mb-4">
+        <label class="form-label" for="form2Example2">Password</label>
+        {{form.password1}}
+      
+    </div>
+
+    <div data-mdb-input-init class="form-outline mb-4">
+        <label class="form-label" for="form2Example2">Password</label>
+        {{form.password2}}
+      
+    </div>
+  
+    <!-- Submit button -->
+    <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Sign in</button>
+  
+    <!-- Register buttons -->
+    <div class="text-center">
+      <p>Already a member ? <a href="{% url 'accounts:login' %}">Login</a></p>
+      
+    </div>
+  </form>
+{% endblock%}

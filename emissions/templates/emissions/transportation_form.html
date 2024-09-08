@@ -1,15 +1,20 @@
 {% extends 'base.html'%}
 
+{%load static%}
+
 {% block content %}
-<html>
+
     <form action="" method="POST">
 
         {% csrf_token %}
         {{form.as_p}}
-        <button type="submit">
+        <button class="btn btn-primary" type="submit">
             Submit
         </button>
     </form>
-</html>
+<div>
+    <img style="margin-left: 300px; " src="{% static 'media/images/wcft.jpeg'%}" alt="">
+    
+</div>
 
 {% endblock%}
