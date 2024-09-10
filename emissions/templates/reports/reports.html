@@ -1,0 +1,20 @@
+{% extends 'base.html'%}
+
+
+{% block content %}
+
+{% for transportation in transportations%}
+<p>
+
+{{transportation.get_sum_emissions}} 
+
+</p>
+
+
+{%endfor%}
+
+{{total_emission_transportation}}
+
+
+
+{% endblock%}

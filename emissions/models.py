@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from decouple import config
 
 VEHICLE_TYPE_CHOICES = (
         ("car","Car"),
@@ -12,17 +13,47 @@ VEHICLE_TYPE_CHOICES = (
         ("plane","Plane")
     )
 
+CONSUMPTION_TYPE_CHOICES = (
+        ("heating","Heating"),
+        ("electricity","Electricity"),
+        ("water","Water"),
+    )
 class Household(models.Model):
+
+
     id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    heating = models.DecimalField(max_digits = 6, decimal_places = 2, default = 0)
-    electricity = models.DecimalField(max_digits = 6, decimal_places = 2, default = 0)
-    water = models.DecimalField(max_digits = 6, decimal_places = 2, default = 0)
+    
+    
+    consumption_type = models.CharField(max_length = 50, choices = CONSUMPTION_TYPE_CHOICES)
+    consumption_value = models.DecimalField(max_digits = 6, decimal_places = 2, default = 0)
     month_period = models.CharField(max_length = 50, help_text = "yyyy-mm")
     user = models.ForeignKey(get_user_model(), on_delete = models.CASCADE)
     created_at = models.DateField(auto_now_add = True)
     
+    
     def get_absolute_url(self):
         return reverse("home")
+
+
+    class Meta:
+        unique_together = ("consumption_type","month_period","user")
+
+
+    @property
+    def get_sum_emissions(self):
+        
+        if self.vehicle_type == "car":
+            return self.distance * float(config("CAR_EMISSION"))
+        elif self.vehicle_type == "walking":
+            return self.distance * 0
+        elif self.vehicle_type == "subway":
+            return self.distance * float(config("SUBWAY_EMISSION"))
+        elif self.vehicle_type == "cycling":
+            return self.distance * 0
+        elif self.vehicle_type == "bus":
+            return self.distance * float(config("BUS_EMISSION"))
+        elif self.vehicle_type == "plane":
+            return self.distance * float(config("PLANE_EMISSION"))
 
 
 class Transportation(models.Model):
@@ -37,4 +68,25 @@ class Transportation(models.Model):
 
     def get_absolute_url(self):
         return reverse("home")
+
+    class Meta:
+        unique_together = ('user','transportation_date','vehicle_type')
+    
+    @property
+    def get_sum_emissions(self):
+        
+        if self.vehicle_type == "car":
+            return self.distance * float(config("CAR_EMISSION"))
+        elif self.vehicle_type == "walking":
+            return self.distance * 0
+        elif self.vehicle_type == "subway":
+            return self.distance * float(config("SUBWAY_EMISSION"))
+        elif self.vehicle_type == "cycling":
+            return self.distance * 0
+        elif self.vehicle_type == "bus":
+            return self.distance * float(config("BUS_EMISSION"))
+        elif self.vehicle_type == "plane":
+            return self.distance * float(config("PLANE_EMISSION"))
+
+    
 

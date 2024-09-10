@@ -1,4 +1,6 @@
 {% extends 'base.html'%}
+
+{%load static%}
 {% block content %}
 
     <form action="" method="POST">
@@ -9,6 +11,19 @@
             Submit
         </button>
     </form>
+
+    <div>
+        <img style="transform: scale(0.4); margin-top:-150px; margin-left: -200px;" src="{% static 'media/images/Soil.jpeg'%}" alt="">
+
+        <div>
+    <pre style="margin-left: 500px; border: solid; border-radius: 30px;">
+        In this section you are asked to provide your 
+        monthly household consumption of your electricity, heating and water usage. 
+        The system than takes your valuable input and calculates your household footprint 
+        which is then demonstrated as visual graphics in the graphs section.
+    </pre>
+        </div>
+    </div>
 
 
 {% endblock%}

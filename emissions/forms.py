@@ -2,9 +2,8 @@ from django import forms
 from emissions import models
 
 class HouseholdForm(forms.ModelForm):
-    heating = forms.FloatField(widget = forms.NumberInput(attrs = {'class':'form-control', 'placeholder': 'kWh'}))
-    electricity = forms.FloatField(widget = forms.NumberInput(attrs = {'class':'form-control', 'placeholder': 'kWh'}))
-    water = forms.FloatField(widget = forms.NumberInput(attrs = {'class':'form-control', 'placeholder': 'm3'}))
+    consumption_type = forms.ChoiceField(widget = forms.Select(attrs = {'class':'form-control', 'placeholder': '---'}),choices = models.CONSUMPTION_TYPE_CHOICES)
+    consumption_value = forms.FloatField(widget = forms.NumberInput(attrs = {'class':'form-control', 'placeholder': '0.0'}))
     month_period = forms.CharField(widget = forms.TextInput(attrs = {'class':'form-control', 'placeholder': 'yyyy-mm'}))
     class Meta:
         model = models.Household
