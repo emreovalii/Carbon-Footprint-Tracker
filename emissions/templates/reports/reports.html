@@ -13,7 +13,23 @@
 
 {%endfor%}
 
+{% for household in households%}
+<p>
+
+{{household.get_sum_emissions}} 
+
+</p>
+
+
+{%endfor%}
+
+
+
+<label > Transportation </label>
 {{total_emission_transportation}}
+
+<label> Household </label>
+{{total_emission_household}}
 
 
 

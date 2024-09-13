@@ -41,19 +41,14 @@ class Household(models.Model):
 
     @property
     def get_sum_emissions(self):
+        #TODO : household modeline göre düzenlenmesi gerekiyor
+        if self.consumption_type == "electricity":
+            return float(self.consumption_value) * float(config("ELECTRICITY_EMISSION"))
+        elif self.consumption_type == "water":
+            return float(self.consumption_value) * float(config("WATER_EMISSION"))
+        elif self.consumption_type == "heating":
+            return float(self.consumption_value) * float(config("HEATING_EMISSION"))
         
-        if self.vehicle_type == "car":
-            return self.distance * float(config("CAR_EMISSION"))
-        elif self.vehicle_type == "walking":
-            return self.distance * 0
-        elif self.vehicle_type == "subway":
-            return self.distance * float(config("SUBWAY_EMISSION"))
-        elif self.vehicle_type == "cycling":
-            return self.distance * 0
-        elif self.vehicle_type == "bus":
-            return self.distance * float(config("BUS_EMISSION"))
-        elif self.vehicle_type == "plane":
-            return self.distance * float(config("PLANE_EMISSION"))
 
 
 class Transportation(models.Model):
@@ -68,6 +63,8 @@ class Transportation(models.Model):
 
     def get_absolute_url(self):
         return reverse("home")
+
+
 
     class Meta:
         unique_together = ('user','transportation_date','vehicle_type')
@@ -87,6 +84,9 @@ class Transportation(models.Model):
             return self.distance * float(config("BUS_EMISSION"))
         elif self.vehicle_type == "plane":
             return self.distance * float(config("PLANE_EMISSION"))
+
+
+    
 
     
 

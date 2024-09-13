@@ -27,6 +27,7 @@ class EmissionReportView(View):
     def get(self,request):
         context = {}
         transportation_queryset = models.Transportation.objects.filter(user = request.user)
+       
         total_emission_transportation = transportation_queryset.annotate(
             per_emission = Case(
                 When(vehicle_type = "car",then = F("distance")* float(config("CAR_EMISSION"))),
@@ -40,8 +41,25 @@ class EmissionReportView(View):
             )
         ).aggregate(total_emission = Sum("per_emission"))
         
+        ## household için yap
+
+        household_queryset = models.Household.objects.filter(user = request.user)
+        total_emission_household = household_queryset.annotate(
+            per_emission = Case(
+                When(consumption_type = "electricity",then = F("consumption_value")* float(config("ELECTRICITY_EMISSION"))),
+                When(consumption_type = "water",then = F("consumption_value")* float(config("WATER_EMISSION"))),
+                When(consumption_type = "heating",then = F("consumption_value")* float(config("HEATING_EMISSION"))),
+                
+                output_field = FloatField()
+
+            )
+        ).aggregate(total_emission = Sum("per_emission"))
+        
+        context["households"] = household_queryset
+        context["total_emission_household"] = total_emission_household["total_emission"]
         context["transportations"] = transportation_queryset
         context["total_emission_transportation"] = total_emission_transportation["total_emission"]
+        
         
 
         return render(request,"reports/reports.html",context)
