@@ -66,8 +66,7 @@ class Transportation(models.Model):
 
 
 
-    class Meta:
-        unique_together = ('user','transportation_date','vehicle_type')
+    
     
     @property
     def get_sum_emissions(self):
