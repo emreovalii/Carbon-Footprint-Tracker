@@ -19,11 +19,13 @@ from django.urls import path,include
 from home.views import HomeView
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("emissions/", include("emissions.urls"), name = "emissions"),
     path("accounts/", include("accounts.urls"), name = "accounts"),
+    path("about/", TemplateView.as_view(template_name = "about.html",), name ="about"),
     path("", HomeView.as_view(), name = "home"),
 ]
 

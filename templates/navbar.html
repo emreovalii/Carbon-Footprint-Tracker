@@ -3,11 +3,16 @@
         <a href="{% url 'home' %}" class="brand">Carbon Footprint Tracker</a>
         <nav>
             <ul>
+                {% if user.is_authenticated %}
                 <li><a href="{% url 'emissions:transportation_create'%}">Transportation</a></li>
                 <li><a href="{% url 'emissions:household_create'%}">Household</a>
-                <li><a href="about.html">About</a></li>
+                    {% endif %}
+                <li><a href="{% url 'about' %}">About</a></li>
                 <li><a href="{% url 'home' %}" title="LandingPage">Home</a></li>
+                    
+                        {% if user.is_authenticated %}
                 <li><a href="{%url 'emissions:emission_report'%}">Graphs</a></li>
+                        {% endif %}
                 <li>
                     {% if user.is_authenticated %}
                 <form action="{% url 'accounts:logout' %}" method="POST">
