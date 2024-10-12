@@ -3,34 +3,98 @@
 
 {% block content %}
 
-{% for transportation in transportations%}
-<p>
-
-{{transportation.get_sum_emissions}} 
-
-</p>
-
-
-{%endfor%}
-
-{% for household in households%}
-<p>
-
-{{household.get_sum_emissions}} 
-
-</p>
-
-
-{%endfor%}
 
 
 
-<label > Transportation </label>
-{{total_emission_transportation}}
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh; ;">
 
-<label> Household </label>
-{{total_emission_household}}
+<div class="container" >
+    <div class="row" style="margin-bottom: 100px;">
+        <div class="col-md-4">
+            <h3>Transportation</h3>
+            <canvas id="transportation-chart" style="background-color: aliceblue;"></canvas>
+        </div>
+        <div class="col-md-4">
+            <h3>Household</h3>
+            <canvas id="household-chart" style="background-color: aliceblue;"></canvas>
+        </div>
+    </div>
+    
+</div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+    const transportationLabels = [
+        {% for item in transportation_by_date %}
+            "{{item.transportation_date}}",
+        {% endfor %}
+    ];
+
+    const transportationEmissions = [
+        {% for item in transportation_by_date %}
+            {{item.total_emission}},
+        {% endfor %}
+    ];
+
+    const householdLabels = [
+        {% for item in household_by_month %}
+            "{{item.month_period}}",
+        {% endfor %}
+    ]
+
+    const householdEmissions = [
+        {% for item in household_by_month %}
+            {{item.total_emission}},
+        {% endfor %}
+    ]
+
+    
 
 
+    const transportation = document.getElementById('transportation-chart');
+    const household = document.getElementById('household-chart');
+  
+    new Chart(transportation, {
+      type: 'bar',
+      data: {
+        labels: transportationLabels ,
+        datasets: [{
+          label: 'Daily Transportation Emissions',
+          data: transportationEmissions,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
 
+    new Chart(household, {
+      type: 'line',
+      data: {
+        labels: householdLabels ,
+        datasets: [{
+          label: 'Monthly Household Emissions',
+          data: householdEmissions,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    
+  </script>
 {% endblock%}
