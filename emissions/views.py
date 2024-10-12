@@ -41,9 +41,10 @@ class EmissionReportView(View):
                output_field=FloatField()
            )
        ).values("transportation_date").annotate(
-           total_emission=Sum("per_emission")  # per_emission'ı topluyoruz
+           total_emission=Sum("per_emission"), # per_emission'ı topluyoruz
+           trees_needed=Sum("per_emission") * int(config("TREE"))  
        ))
-
+       print(total_emission_transportation_by_date)
        # Household verilerini grupla ve topla (gün bazlı veya aylık bazda)
        household_queryset = models.Household.objects.filter(user=request.user)
        total_emission_household_by_month = list(household_queryset.annotate(
@@ -56,6 +57,9 @@ class EmissionReportView(View):
        ).values("month_period").annotate(
            total_emission=Sum("per_emission")  # per_emission'ı topluyoruz
        ))
+
+
+
 
        context["transportation_by_date"] = total_emission_transportation_by_date
        context["household_by_month"] = total_emission_household_by_month
