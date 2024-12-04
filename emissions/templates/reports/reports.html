@@ -18,6 +18,10 @@
             <h3>Household</h3>
             <canvas id="household-chart" style="background-color: aliceblue;"></canvas>
         </div>
+      <div class="col-md-4">
+            <h3> Offsetting  Emissions</h3>    
+            <canvas id="trees-chart" style="background-color: aliceblue;"></canvas>   
+      </div>
     </div>
     
 </div>
@@ -51,11 +55,24 @@
         {% endfor %}
     ]
 
+    const treesLabels = [
+        {% for item in transportation_by_date %}
+            "{{item.transportation_date}}",
+        {% endfor %}
+    ];
+
+    const trees = [
+        {% for item in transportation_by_date %}
+            {{item.trees_needed}},
+        {% endfor %}
+    ];
+
     
 
 
     const transportation = document.getElementById('transportation-chart');
     const household = document.getElementById('household-chart');
+    const treesNeeded = document.getElementById('trees-chart');
   
     new Chart(transportation, {
       type: 'bar',
@@ -94,6 +111,27 @@
         }
       }
     });
+
+    new Chart(treesNeeded, {
+      type: 'bar',
+      data: {
+        labels: treesLabels ,
+        datasets: [{
+          label: 'daily trees needed to offset',
+          data: trees,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    
 
     
   </script>

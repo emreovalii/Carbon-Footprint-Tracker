@@ -2,8 +2,9 @@ from django.shortcuts import render
 from django.views import generic,View
 from emissions import models,forms
 from django.http import HttpResponseRedirect
-from django.db.models import Sum,Case,When,F,FloatField
+from django.db.models import Sum,Case,When,F,FloatField,IntegerField
 from decouple import config
+from django.db.models.functions import Cast
 
 
 class HouseholdCreateView(generic.CreateView):
@@ -42,8 +43,8 @@ class EmissionReportView(View):
            )
        ).values("transportation_date").annotate(
            total_emission=Sum("per_emission"), # per_emission'ı topluyoruz
-           trees_needed=Sum("per_emission") * int(config("TREE"))  
-       ))
+           trees_needed=Cast(Sum("per_emission") * int(config("TREE")), output_field = IntegerField())
+           ))
        print(total_emission_transportation_by_date)
        # Household verilerini grupla ve topla (gün bazlı veya aylık bazda)
        household_queryset = models.Household.objects.filter(user=request.user)
