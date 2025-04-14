@@ -1,3 +1,4 @@
 django
 django-decouple
 psycopg2-binary
+gunicorn
