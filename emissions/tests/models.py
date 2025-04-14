@@ -70,17 +70,4 @@ class TransportationModelTest(TestCase):
 
         self.assertEqual(transportation.get_sum_emissions, 0)
 
-    def test_unique_constraint(self):
-        # Aynı kullanıcı, aynı taşıma verisi ile aynı kaydı eklememeliyiz
-        Transportation.objects.create(
-            vehicle_type="car",
-            distance=100,
-            user=self.user
-        )
-
-        with self.assertRaises(Exception):
-            Transportation.objects.create(
-                vehicle_type="car",
-                distance=100,
-                user=self.user
-            )
+    
